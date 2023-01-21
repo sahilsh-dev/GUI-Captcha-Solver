@@ -14,7 +14,7 @@ win.config(bg="lightblue", padx=50, pady=50)
 start_screen = Frame(win)
 login_screen = Frame(win)
 start_screen.config(bg="lightblue")
-login_screen.config(bg="lightblue")
+login_screen.config(bg="lightblue", pady=50)
 
 # Start Screen
 start_screen.pack(fill=BOTH, expand=True)
@@ -23,18 +23,19 @@ canvas = Canvas(start_screen, width=258, height=194)
 canvas.create_image(128, 97, image=icon_img)
 canvas.pack(pady=20)
 
-start_btn = Button(start_screen, text="Start", font=("Courier", 15, "normal"), command=login, width=11)
+start_btn = Button(start_screen, text="Start", font=("Courier", 15, "bold"), command=login, bg='white', width=11)
 start_btn.pack(pady=50)
 
 # Login Screen
-uid_label = Label(login_screen, text="UID :")
-uid_label.pack(pady=10)
-uid = Entry(login_screen, width=20)
-uid.pack()
+uid_label = Label(login_screen, text="UID :", font=("Courier", 15, "normal"), bg='white')
+uid_label.pack()
+uid = Entry(login_screen, width=18, font=("Courier", 13, "normal"))
+uid.pack(pady=20)
 
-pswd_label = Label(login_screen, text="Password :")
-pswd_label.pack(pady=10)
-pswd = Entry(login_screen, width=20)
+pswd_label = Label(login_screen, text="Password :", font=("Courier", 15, "normal"), bg='white')
+pswd_label.pack(pady=20)
+pswd = Entry(login_screen, width=18, font=("Courier", 13, "normal"))
+pswd.place(rely=0.5)
 pswd.pack()
 
 
