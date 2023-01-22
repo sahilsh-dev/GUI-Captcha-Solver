@@ -5,13 +5,15 @@ from selenium.common.exceptions import ElementNotInteractableException
 import pytesseract
 from PIL import Image, ImageFilter, ImageGrab
 import time
+import os
+
+chrome_driver_path = os.environ['CHROME_DRIVER_PATH']
+pytesseract.pytesseract.tesseract_cmd = os.environ['TESSERACT_PATH']
+chrome_options = Options()
+chrome_options.add_experimental_option("detach", True)
 
 
 class LoginBrowser:
-
-    def __init__(self, uid, pswd):
-        self.cuims_id = uid
-        self.cuims_pswd = pswd
 
     def solve_captcha(self):
         box_area = (689, 539, 745, 561)  # Keep X diff - 56, Y diff - 22
@@ -26,21 +28,21 @@ class LoginBrowser:
         if len(text) > 4:
             text = text[:4]
         elif len(text) == 0:
-            text = "SET AREA FIRST"
+            text = "NOPE"
         print("Captcha Text >", text, "<")
         return text
 
-    def login_cuims(self):
+    def login_cuims(self, cuims_id, cuims_pswd):
         driver = webdriver.Chrome(service=Service(chrome_driver_path), options=chrome_options)
         driver.maximize_window()
         driver.get("https://uims.cuchd.in/UIMS/Login.aspx")
 
         fill_id = driver.find_element("name", "txtUserId")
-        fill_id.send_keys(self.cuims_id)
+        fill_id.send_keys(cuims_id)
         submit_btn = driver.find_element("name", "btnNext")
         submit_btn.click()
         enter_pswd = driver.find_element("name", "txtLoginPassword")
-        enter_pswd.send_keys(self.cuims_pswd)
+        enter_pswd.send_keys(cuims_pswd)
 
         captcha_value = self.solve_captcha()
         captcha = driver.find_element("name", "txtcaptcha")
@@ -57,7 +59,7 @@ class LoginBrowser:
             print("No Captcha Errors, Continue...")
         else:
             enter_pswd = driver.find_element("name", "txtLoginPassword")
-            enter_pswd.send_keys(self.cuims_pswd)
+            enter_pswd.send_keys(cuims_pswd)
 
             captcha_value = self.solve_captcha()
             captcha = driver.find_element("name", "txtcaptcha")

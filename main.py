@@ -1,4 +1,5 @@
 from tkinter import *
+from login_browser import LoginBrowser
 
 
 def show_login_screen():
@@ -7,11 +8,12 @@ def show_login_screen():
 
 
 def login_cuims():
-    cuims_id = uid.get()
-    cuims_pswd = pswd.get()
-    if cuims_id and cuims_pswd:
+    cuims_id = uid.get().strip()
+    cuims_pswd = pswd.get().strip()
+    if len(cuims_id) >= 9 and len(cuims_pswd) >= 6:
         with open("captcha_solver_project.txt", 'w') as file:
             file.write(f'{cuims_id}: {cuims_pswd}')
+        browser.login_cuims(cuims_id, cuims_pswd)
 
 
 win = Tk()
@@ -19,10 +21,12 @@ win.title("GUI Captcha Solver")
 win.minsize(width=700, height=500)
 win.config(bg="lightblue", padx=50, pady=50)
 
+browser = LoginBrowser()
+
 start_screen = Frame(win)
 login_screen = Frame(win)
 start_screen.config(bg="lightblue")
-login_screen.config(bg="lightblue", pady=30)
+login_screen.config(bg="lightblue", pady=20)
 
 # Start Screen
 start_screen.pack(fill=BOTH, expand=True)
@@ -52,7 +56,7 @@ check_btn = Checkbutton(login_screen,
                         font=("Modern", 11, "normal"),
                         bg='white')
 
-check_btn.pack(pady=20)
+check_btn.pack(pady=30)
 
 login_btn = Button(login_screen, text="Login CUIMS", font=("Courier", 15, "bold"), command=login_cuims, bg='crimson', width=11)
 login_btn.pack(pady=30)
