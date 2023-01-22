@@ -114,4 +114,6 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml
 
+captcha_solver_project.txt
+captcha.png
 # End of https://www.toptal.com/developers/gitignore/api/pycharm

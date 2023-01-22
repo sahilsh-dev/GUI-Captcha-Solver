@@ -7,7 +7,11 @@ def show_login_screen():
 
 
 def login_cuims():
-    pass
+    cuims_id = uid.get()
+    cuims_pswd = pswd.get()
+    if cuims_id and cuims_pswd:
+        with open("captcha_solver_project.txt", 'w') as file:
+            file.write(f'{cuims_id}: {cuims_pswd}')
 
 
 win = Tk()
