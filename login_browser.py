@@ -67,3 +67,4 @@ class LoginBrowser:
             captcha.send_keys(captcha_value)
             submit_captcha = driver.find_element("name", "btnLogin")
             submit_captcha.click()
+        
